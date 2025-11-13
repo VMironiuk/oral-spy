@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		8028EE2C2EC5ED6D00FA0970 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80B65BB12EC4D33A00C151CC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 80B65BB82EC4D33A00C151CC;
+			remoteInfo = OralSpy;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		8028EE282EC5ED6D00FA0970 /* OralSpyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OralSpyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B65BB92EC4D33A00C151CC /* OralSpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OralSpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8028EE292EC5ED6D00FA0970 /* OralSpyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = OralSpyTests;
+			sourceTree = "<group>";
+		};
 		80B65BBB2EC4D33A00C151CC /* OralSpy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = OralSpy;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8028EE252EC5ED6D00FA0970 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80B65BB62EC4D33A00C151CC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				80B65BBB2EC4D33A00C151CC /* OralSpy */,
+				8028EE292EC5ED6D00FA0970 /* OralSpyTests */,
 				80B65BBA2EC4D33A00C151CC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				80B65BB92EC4D33A00C151CC /* OralSpy.app */,
+				8028EE282EC5ED6D00FA0970 /* OralSpyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8028EE272EC5ED6D00FA0970 /* OralSpyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8028EE2E2EC5ED6D00FA0970 /* Build configuration list for PBXNativeTarget "OralSpyTests" */;
+			buildPhases = (
+				8028EE242EC5ED6D00FA0970 /* Sources */,
+				8028EE252EC5ED6D00FA0970 /* Frameworks */,
+				8028EE262EC5ED6D00FA0970 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8028EE2D2EC5ED6D00FA0970 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8028EE292EC5ED6D00FA0970 /* OralSpyTests */,
+			);
+			name = OralSpyTests;
+			packageProductDependencies = (
+			);
+			productName = OralSpyTests;
+			productReference = 8028EE282EC5ED6D00FA0970 /* OralSpyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		80B65BB82EC4D33A00C151CC /* OralSpy */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 80B65BC42EC4D33A00C151CC /* Build configuration list for PBXNativeTarget "OralSpy" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					8028EE272EC5ED6D00FA0970 = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = 80B65BB82EC4D33A00C151CC;
+					};
 					80B65BB82EC4D33A00C151CC = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				80B65BB82EC4D33A00C151CC /* OralSpy */,
+				8028EE272EC5ED6D00FA0970 /* OralSpyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8028EE262EC5ED6D00FA0970 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80B65BB72EC4D33A00C151CC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8028EE242EC5ED6D00FA0970 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		80B65BB52EC4D33A00C151CC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,57 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8028EE2D2EC5ED6D00FA0970 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 80B65BB82EC4D33A00C151CC /* OralSpy */;
+			targetProxy = 8028EE2C2EC5ED6D00FA0970 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8028EE2F2EC5ED6D00FA0970 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8U849676MP;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = volodymyroniuk.OralSpyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OralSpy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OralSpy";
+			};
+			name = Debug;
+		};
+		8028EE302EC5ED6D00FA0970 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8U849676MP;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = volodymyroniuk.OralSpyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OralSpy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OralSpy";
+			};
+			name = Release;
+		};
 		80B65BC22EC4D33A00C151CC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -314,6 +431,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8028EE2E2EC5ED6D00FA0970 /* Build configuration list for PBXNativeTarget "OralSpyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8028EE2F2EC5ED6D00FA0970 /* Debug */,
+				8028EE302EC5ED6D00FA0970 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		80B65BB42EC4D33A00C151CC /* Build configuration list for PBXProject "OralSpy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
