@@ -9,7 +9,7 @@ enum RecordingStatus: String {
 
 final class RecordingControlViewModel: ObservableObject {
   @Published private(set) var recordingStatus: RecordingStatus = .stopped
-  @Published private(set) var recordingStatusText: String?
+  @Published private(set) var recordingStatusText = ""
 
   func recordButtonClicked() {
     recordingStatus = .recording

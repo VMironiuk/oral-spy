@@ -5,10 +5,8 @@ struct RecordingControlView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
-      if let statusText = viewModel.recordingStatusText {
-        Text(statusText)
-          .font(.headline)
-      }
+      Text(viewModel.recordingStatusText)
+        .font(.headline)
 
       HStack(spacing: 20) {
         Button(action: { viewModel.stopButtonClicked() }) {

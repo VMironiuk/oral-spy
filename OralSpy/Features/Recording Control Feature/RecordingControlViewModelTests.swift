@@ -52,7 +52,7 @@ struct RecordingControlViewModelTests {
 
   @Test func initialRecordingStatusTextIsNil() {
     let viewModel = RecordingControlViewModel()
-    #expect(viewModel.recordingStatusText == nil)
+    #expect(viewModel.recordingStatusText.isEmpty)
   }
 
   @Test func recordButtonClickedSetsRecordingStatusTextToRecording() {
