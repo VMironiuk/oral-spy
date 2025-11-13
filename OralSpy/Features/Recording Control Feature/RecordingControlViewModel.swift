@@ -10,8 +10,9 @@ protocol TimerServiceType {
 
 protocol AudioRecordingServiceType {
   var error: AnyPublisher<Error?, Never> { get }
+  var recordingFinished: AnyPublisher<URL, Never> { get }
   func checkPermissions()
-  func record()
+  func record() throws
   func pause()
   func stop()
 }
@@ -53,21 +54,34 @@ final class RecordingControlViewModel: ObservableObject {
         recordingStatus = .stopped
         recordingStatusText = RecordingStatus.stopped.rawValue
         timerService.stop()
+        audioRecordingService.stop()
         self.error = error
       }
       .store(in: &cancellables)
-    
+
+    audioRecordingService.recordingFinished
+      .receive(on: DispatchQueue.main)
+      .sink { fileURL in
+        print("Recording finished: \(fileURL)")
+      }
+      .store(in: &cancellables)
+
     audioRecordingService.checkPermissions()
   }
 
   func recordButtonClicked() {
-    audioRecordingService.record()
-    recordingStatus = .recording
-    recordingStatusText = RecordingStatus.recording.rawValue
-    timerService.start()
+    do {
+      try audioRecordingService.record()
+      recordingStatus = .recording
+      recordingStatusText = RecordingStatus.recording.rawValue
+      timerService.start()
+    } catch {
+      self.error = error
+    }
   }
 
   func stopButtonClicked() {
+    audioRecordingService.stop()
     recordingStatus = .stopped
     recordingStatusText = RecordingStatus.stopped.rawValue
     timerService.stop()
@@ -76,13 +90,19 @@ final class RecordingControlViewModel: ObservableObject {
   func pauseButtonClicked() {
     switch recordingStatus {
     case .recording:
+      audioRecordingService.pause()
       recordingStatus = .paused
       recordingStatusText = RecordingStatus.paused.rawValue
       timerService.pause()
     case .paused:
-      recordingStatus = .recording
-      recordingStatusText = RecordingStatus.recording.rawValue
-      timerService.start()
+      do {
+        try audioRecordingService.record()
+        recordingStatus = .recording
+        recordingStatusText = RecordingStatus.recording.rawValue
+        timerService.start()
+      } catch {
+        self.error = error
+      }
     case .stopped:
       break
     }
