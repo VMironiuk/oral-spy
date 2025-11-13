@@ -4,29 +4,36 @@ struct RecordingControlView: View {
   @StateObject private var viewModel = RecordingControlViewModel()
 
   var body: some View {
-    HStack(spacing: 20) {
-      Button(action: { viewModel.stopButtonClicked() }) {
-        Image(systemName: "stop.fill")
-          .font(.system(size: 24))
+    VStack(alignment: .leading, spacing: 20) {
+      if let statusText = viewModel.recordingStatusText {
+        Text(statusText)
+          .font(.headline)
       }
-      .buttonStyle(.borderless)
-      .disabled(isStopButtonDisabled)
 
-      Button(action: { viewModel.recordButtonClicked() }) {
-        Image(systemName: "record.circle")
-          .font(.system(size: 24))
-      }
-      .buttonStyle(.borderless)
-      .disabled(isRecordButtonDisabled)
+      HStack(spacing: 20) {
+        Button(action: { viewModel.stopButtonClicked() }) {
+          Image(systemName: "stop.fill")
+            .font(.system(size: 24))
+        }
+        .buttonStyle(.borderless)
+        .disabled(isStopButtonDisabled)
 
-      Button(action: { viewModel.pauseButtonClicked() }) {
-        Image(systemName: pauseButtonIcon)
-          .font(.system(size: 24))
+        Button(action: { viewModel.recordButtonClicked() }) {
+          Image(systemName: "record.circle")
+            .font(.system(size: 24))
+        }
+        .buttonStyle(.borderless)
+        .disabled(isRecordButtonDisabled)
+
+        Button(action: { viewModel.pauseButtonClicked() }) {
+          Image(systemName: pauseButtonIcon)
+            .font(.system(size: 24))
+        }
+        .buttonStyle(.borderless)
+        .disabled(isPauseButtonDisabled)
       }
-      .buttonStyle(.borderless)
-      .disabled(isPauseButtonDisabled)
+      .frame(maxWidth: .infinity)
     }
-    .frame(maxWidth: .infinity)
     .padding()
   }
 
@@ -45,11 +52,11 @@ struct RecordingControlView: View {
   private var pauseButtonIcon: String {
     switch viewModel.recordingState {
     case .recording:
-      return "pause.fill"
+      "pause.fill"
     case .paused:
-      return "play.fill"
+      "play.fill"
     case .stopped:
-      return "pause.fill"
+      "pause.fill"
     }
   }
 }
