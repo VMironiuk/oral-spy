@@ -1,6 +1,13 @@
 import Combine
 import Foundation
 
+protocol TimerServiceType {
+  var elapsedSeconds: AnyPublisher<TimeInterval, Never> { get }
+  func start()
+  func stop()
+  func pause()
+}
+
 enum RecordingStatus: String {
   case stopped = "Stopped"
   case recording = "Recording"
@@ -12,19 +19,27 @@ final class RecordingControlViewModel: ObservableObject {
   @Published private(set) var recordingStatusText = ""
   @Published private(set) var durationText = "00:00:00"
 
-  private var elapsedSeconds: TimeInterval = 0
+  private let timerService: TimerServiceType = TimerService()
   private var timerCancellable: AnyCancellable?
+
+  init() {
+    timerCancellable = timerService.elapsedSeconds
+      .sink { [weak self] seconds in
+        guard let self else { return }
+        self.durationText = self.formatDuration(seconds)
+      }
+  }
 
   func recordButtonClicked() {
     recordingStatus = .recording
     recordingStatusText = RecordingStatus.recording.rawValue
-    startTimer()
+    timerService.start()
   }
 
   func stopButtonClicked() {
     recordingStatus = .stopped
     recordingStatusText = RecordingStatus.stopped.rawValue
-    stopTimer()
+    timerService.stop()
   }
 
   func pauseButtonClicked() {
@@ -32,12 +47,11 @@ final class RecordingControlViewModel: ObservableObject {
     case .recording:
       recordingStatus = .paused
       recordingStatusText = RecordingStatus.paused.rawValue
-      timerCancellable?.cancel()
-      timerCancellable = nil
+      timerService.pause()
     case .paused:
       recordingStatus = .recording
       recordingStatusText = RecordingStatus.recording.rawValue
-      startTimer()
+      timerService.start()
     case .stopped:
       break
     }
@@ -49,22 +63,5 @@ final class RecordingControlViewModel: ObservableObject {
     let minutes = (totalSeconds % 3600) / 60
     let seconds = totalSeconds % 60
     return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-  }
-
-  private func startTimer() {
-    timerCancellable = Timer.publish(every: 1.0, on: .main, in: .common)
-      .autoconnect()
-      .sink { [weak self] _ in
-        guard let self else { return }
-        self.elapsedSeconds += 1
-        self.durationText = self.formatDuration(self.elapsedSeconds)
-      }
-  }
-
-  private func stopTimer() {
-    timerCancellable?.cancel()
-    timerCancellable = nil
-    elapsedSeconds = 0
-    durationText = "00:00:00"
   }
 }
