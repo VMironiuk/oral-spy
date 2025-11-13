@@ -19,10 +19,11 @@ final class RecordingControlViewModel: ObservableObject {
   @Published private(set) var recordingStatusText = ""
   @Published private(set) var durationText = "00:00:00"
 
-  private let timerService: TimerServiceType = TimerService()
+  private let timerService: TimerServiceType
   private var timerCancellable: AnyCancellable?
 
-  init() {
+  init(timerService: TimerServiceType = TimerService()) {
+    self.timerService = timerService
     timerCancellable = timerService.elapsedSeconds
       .sink { [weak self] seconds in
         guard let self else { return }
