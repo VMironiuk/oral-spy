@@ -26,6 +26,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Features/Recording Control Feature/RecordingControlViewModelTests.swift",
+				"Features/Recording List Feature/RecordingListViewModelTests.swift",
 				"Features/Recording Row Feature/RecordingRowViewModelTests.swift",
 			);
 			target = 8028EE272EC5ED6D00FA0970 /* OralSpyTests */;
@@ -34,6 +35,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Features/Recording Control Feature/RecordingControlViewModelTests.swift",
+				"Features/Recording List Feature/RecordingListViewModelTests.swift",
 				"Features/Recording Row Feature/RecordingRowViewModelTests.swift",
 			);
 			target = 80B65BB82EC4D33A00C151CC /* OralSpy */;

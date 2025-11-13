@@ -2,18 +2,21 @@ import SwiftUI
 
 struct RecordingRowView: View {
   let item: RecordingItem
-  @StateObject private var viewModel = RecordingRowViewModel()
+  let isPlaying: Bool
+  let onPlay: (UUID, String) -> Void
+  let onStop: () -> Void
+
   @State private var isHovered = false
 
   var body: some View {
     HStack(spacing: 12) {
-      if viewModel.isPlaying {
-        Button(action: { viewModel.stopButtonClicked() }) {
+      if isPlaying {
+        Button(action: { onStop() }) {
           Image(systemName: "stop.fill")
         }
         .buttonStyle(.borderless)
       } else if isHovered {
-        Button(action: { viewModel.playButtonClicked(for: item.fileURL) }) {
+        Button(action: { onPlay(item.id, item.fileURL) }) {
           Image(systemName: "play.fill")
         }
         .buttonStyle(.borderless)
@@ -37,6 +40,9 @@ struct RecordingRowView: View {
       duration: 125,
       fileSize: 1024000,
       fileURL: "/path/to/recording.m4a"
-    )
+    ),
+    isPlaying: false,
+    onPlay: { _, _ in },
+    onStop: {}
   )
 }
