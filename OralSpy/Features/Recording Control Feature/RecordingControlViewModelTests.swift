@@ -82,4 +82,82 @@ struct RecordingControlViewModelTests {
     viewModel.pauseButtonClicked()
     #expect(viewModel.recordingStatusText == "Recording")
   }
+
+  @Test func durationTextFormatsSeconds() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 5
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    #expect(viewModel.durationText == "00:00:05")
+  }
+
+  @Test func durationTextFormatsMinutesAndSeconds() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 125
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    #expect(viewModel.durationText == "00:02:05")
+  }
+
+  @Test func durationTextFormatsHoursMinutesAndSeconds() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 3665
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    #expect(viewModel.durationText == "01:01:05")
+  }
+
+  @Test func durationTextFormatsExactlyOneHour() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 3600
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    #expect(viewModel.durationText == "01:00:00")
+  }
+
+  @Test func durationTextFormatsExactlyOneMinute() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 60
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    #expect(viewModel.durationText == "00:01:00")
+  }
+
+  @Test func durationTextFormatsMultipleHours() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 7325
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    #expect(viewModel.durationText == "02:02:05")
+  }
+
+  @Test func durationTextResetsToZeroOnStop() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 125
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    viewModel.stopButtonClicked()
+    #expect(viewModel.durationText == "00:00:00")
+  }
+
+  @Test func durationTextPreservesValueOnPause() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 125
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    viewModel.pauseButtonClicked()
+    #expect(viewModel.durationText == "00:02:05")
+  }
+
+  @Test func durationTextContinuesFromPausedValueOnResume() {
+    let stub = TimerServiceStub()
+    stub.secondsToAdvance = 60
+    let viewModel = RecordingControlViewModel(timerService: stub)
+    viewModel.recordButtonClicked()
+    #expect(viewModel.durationText == "00:01:00")
+    stub.secondsToAdvance = 30
+    viewModel.pauseButtonClicked()
+    viewModel.pauseButtonClicked()
+    #expect(viewModel.durationText == "00:01:30")
+  }
 }
