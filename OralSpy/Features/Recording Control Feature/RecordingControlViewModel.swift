@@ -1,10 +1,10 @@
 import Combine
 import Foundation
 
-enum RecordingStatus {
-  case stopped
-  case recording
-  case paused
+enum RecordingStatus: String {
+  case stopped = "Stopped"
+  case recording = "Recording"
+  case paused = "Paused"
 }
 
 final class RecordingControlViewModel: ObservableObject {
@@ -13,22 +13,22 @@ final class RecordingControlViewModel: ObservableObject {
 
   func recordButtonClicked() {
     recordingStatus = .recording
-    recordingStatusText = "Recording"
+    recordingStatusText = RecordingStatus.recording.rawValue
   }
 
   func stopButtonClicked() {
     recordingStatus = .stopped
-    recordingStatusText = "Stopped"
+    recordingStatusText = RecordingStatus.stopped.rawValue
   }
 
   func pauseButtonClicked() {
     switch recordingStatus {
     case .recording:
       recordingStatus = .paused
-      recordingStatusText = "Paused"
+      recordingStatusText = RecordingStatus.paused.rawValue
     case .paused:
       recordingStatus = .recording
-      recordingStatusText = "Recording"
+      recordingStatusText = RecordingStatus.recording.rawValue
     case .stopped:
       break
     }
