@@ -8,6 +8,14 @@ protocol TimerServiceType {
   func pause()
 }
 
+protocol AudioRecordingServiceType {
+  var error: AnyPublisher<Error?, Never> { get }
+  func checkPermissions()
+  func record()
+  func pause()
+  func stop()
+}
+
 enum RecordingStatus: String {
   case stopped = "Stopped"
   case recording = "Recording"
@@ -21,18 +29,39 @@ final class RecordingControlViewModel: ObservableObject {
   @Published var error: Error?
 
   private let timerService: TimerServiceType
-  private var timerCancellable: AnyCancellable?
+  private let audioRecordingService: AudioRecordingServiceType
+  private var cancellables = Set<AnyCancellable>()
 
-  init(timerService: TimerServiceType = TimerService()) {
+  init(
+    timerService: TimerServiceType = TimerService(),
+    audioRecordingService: AudioRecordingServiceType = AudioRecordingService()
+  ) {
     self.timerService = timerService
-    timerCancellable = timerService.elapsedSeconds
+    self.audioRecordingService = audioRecordingService
+    
+    timerService.elapsedSeconds
       .sink { [weak self] seconds in
         guard let self else { return }
         self.durationText = self.formatDuration(seconds)
       }
+      .store(in: &cancellables)
+    
+    audioRecordingService.error
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] error in
+        guard let self else { return }
+        recordingStatus = .stopped
+        recordingStatusText = RecordingStatus.stopped.rawValue
+        timerService.stop()
+        self.error = error
+      }
+      .store(in: &cancellables)
+    
+    audioRecordingService.checkPermissions()
   }
 
   func recordButtonClicked() {
+    audioRecordingService.record()
     recordingStatus = .recording
     recordingStatusText = RecordingStatus.recording.rawValue
     timerService.start()
