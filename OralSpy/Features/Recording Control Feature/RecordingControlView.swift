@@ -8,6 +8,10 @@ struct RecordingControlView: View {
       Text(viewModel.recordingStatusText)
         .font(.headline)
 
+      Text(viewModel.durationText)
+        .font(.system(size: 44, design: .monospaced))
+        .frame(maxWidth: .infinity, alignment: .center)
+
       HStack(spacing: 20) {
         Button(action: { viewModel.stopButtonClicked() }) {
           Image(systemName: "stop.fill")
