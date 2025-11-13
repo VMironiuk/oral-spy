@@ -18,6 +18,7 @@ final class RecordingControlViewModel: ObservableObject {
   @Published private(set) var recordingStatus: RecordingStatus = .stopped
   @Published private(set) var recordingStatusText = ""
   @Published private(set) var durationText = "00:00:00"
+  @Published var error: Error?
 
   private let timerService: TimerServiceType
   private var timerCancellable: AnyCancellable?

@@ -39,6 +39,11 @@ struct RecordingControlView: View {
     }
     .padding()
     .frame(height: 160)
+    .alert("Error", isPresented: .constant(viewModel.error != nil)) {
+      Button("OK") {}
+    } message: {
+      Text(viewModel.error?.localizedDescription ?? "Unknown error")
+    }
   }
 
   private var isStopButtonDisabled: Bool {

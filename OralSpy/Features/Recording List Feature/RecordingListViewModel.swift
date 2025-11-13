@@ -4,6 +4,7 @@ import Foundation
 final class RecordingListViewModel: ObservableObject {
   @Published private(set) var items: [RecordingItem] = RecordingItem.test
   @Published private(set) var playingItemId: UUID?
+  @Published var error: Error?
 
   func removeItem(id: UUID) {
     items.removeAll { $0.id == id }

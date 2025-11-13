@@ -23,6 +23,11 @@ struct RecordingListView: View {
         }
       }
     }
+    .alert("Error", isPresented: .constant(viewModel.error != nil)) {
+      Button("OK") {}
+    } message: {
+      Text(viewModel.error?.localizedDescription ?? "Unknown error")
+    }
   }
 }
 
