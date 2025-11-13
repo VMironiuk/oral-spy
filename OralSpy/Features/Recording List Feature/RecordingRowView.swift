@@ -26,7 +26,7 @@ struct RecordingRowView: View {
 
       Text(item.timestamp)
     }
-    .padding()
+    .padding(.vertical)
     .onHover { hovering in
       isHovered = hovering
     }

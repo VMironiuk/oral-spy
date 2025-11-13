@@ -7,6 +7,7 @@ struct RecordingControlView: View {
     VStack(alignment: .leading, spacing: 20) {
       Text(viewModel.recordingStatusText)
         .font(.headline)
+        .frame(height: 20)
 
       Text(viewModel.durationText)
         .font(.system(size: 44, design: .monospaced))
@@ -37,6 +38,7 @@ struct RecordingControlView: View {
       .frame(maxWidth: .infinity)
     }
     .padding()
+    .frame(height: 160)
   }
 
   private var isStopButtonDisabled: Bool {

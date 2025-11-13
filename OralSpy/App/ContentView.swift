@@ -2,13 +2,11 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    VStack {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundStyle(.tint)
-      Text("Hello, world!")
+    VStack(spacing: 0) {
+      RecordingControlView()
+      RecordingListView()
     }
-    .padding()
+    .frame(minWidth: 250, idealWidth: 250, minHeight: 500, idealHeight: 600)
   }
 }
 
