@@ -21,6 +21,23 @@
 		80B65BB92EC4D33A00C151CC /* OralSpy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OralSpy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8028EE3C2EC5EE1200FA0970 /* Exceptions for "OralSpy" folder in "OralSpyTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Features/Recording Control Feature/RecordingControlViewModelTests.swift",
+			);
+			target = 8028EE272EC5ED6D00FA0970 /* OralSpyTests */;
+		};
+		8028EE3D2EC5EE3200FA0970 /* Exceptions for "OralSpy" folder in "OralSpy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Features/Recording Control Feature/RecordingControlViewModelTests.swift",
+			);
+			target = 80B65BB82EC4D33A00C151CC /* OralSpy */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8028EE292EC5ED6D00FA0970 /* OralSpyTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -29,6 +46,10 @@
 		};
 		80B65BBB2EC4D33A00C151CC /* OralSpy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8028EE3D2EC5EE3200FA0970 /* Exceptions for "OralSpy" folder in "OralSpy" target */,
+				8028EE3C2EC5EE1200FA0970 /* Exceptions for "OralSpy" folder in "OralSpyTests" target */,
+			);
 			path = OralSpy;
 			sourceTree = "<group>";
 		};
