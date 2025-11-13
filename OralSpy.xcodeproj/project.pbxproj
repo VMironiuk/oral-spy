@@ -25,6 +25,7 @@
 		8028EE3C2EC5EE1200FA0970 /* Exceptions for "OralSpy" folder in "OralSpyTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App/ContentViewModelTests.swift,
 				"Features/Recording Control Feature/RecordingControlViewModelTests.swift",
 				"Features/Recording List Feature/RecordingListViewModelTests.swift",
 			);
@@ -33,6 +34,7 @@
 		8028EE3D2EC5EE3200FA0970 /* Exceptions for "OralSpy" folder in "OralSpy" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				App/ContentViewModelTests.swift,
 				"Features/Recording Control Feature/RecordingControlViewModelTests.swift",
 				"Features/Recording List Feature/RecordingListViewModelTests.swift",
 			);

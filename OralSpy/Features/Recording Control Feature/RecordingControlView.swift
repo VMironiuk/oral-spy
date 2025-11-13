@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RecordingControlView: View {
-  @StateObject private var viewModel = RecordingControlViewModel()
+  @ObservedObject var viewModel: RecordingControlViewModel
 
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -66,5 +66,7 @@ struct RecordingControlView: View {
 }
 
 #Preview {
-  RecordingControlView()
+  RecordingControlView(
+    viewModel: RecordingControlViewModel()
+  )
 }

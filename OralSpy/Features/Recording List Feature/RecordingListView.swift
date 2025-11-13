@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RecordingListView: View {
-  @StateObject private var viewModel = RecordingListViewModel()
+  @ObservedObject var viewModel: RecordingListViewModel
 
   var body: some View {
     List {
@@ -27,5 +27,7 @@ struct RecordingListView: View {
 }
 
 #Preview {
-  RecordingListView()
+  RecordingListView(
+    viewModel: RecordingListViewModel()
+  )
 }
