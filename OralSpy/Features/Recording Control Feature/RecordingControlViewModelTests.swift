@@ -5,27 +5,27 @@ import Testing
 struct RecordingControlViewModelTests {
   @Test func initialStateIsStopped() {
     let viewModel = RecordingControlViewModel()
-    #expect(viewModel.recordingState == .stopped)
+    #expect(viewModel.recordingStatus == .stopped)
   }
 
   @Test func recordButtonClickedTransitionsToRecording() {
     let viewModel = RecordingControlViewModel()
     viewModel.recordButtonClicked()
-    #expect(viewModel.recordingState == .recording)
+    #expect(viewModel.recordingStatus == .recording)
   }
 
   @Test func stopButtonClickedTransitionsToStopped() {
     let viewModel = RecordingControlViewModel()
     viewModel.recordButtonClicked()
     viewModel.stopButtonClicked()
-    #expect(viewModel.recordingState == .stopped)
+    #expect(viewModel.recordingStatus == .stopped)
   }
 
   @Test func pauseButtonClickedWhileRecordingTransitionsToPaused() {
     let viewModel = RecordingControlViewModel()
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
-    #expect(viewModel.recordingState == .paused)
+    #expect(viewModel.recordingStatus == .paused)
   }
 
   @Test func pauseButtonClickedWhilePausedTransitionsToRecording() {
@@ -33,13 +33,13 @@ struct RecordingControlViewModelTests {
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     viewModel.pauseButtonClicked()
-    #expect(viewModel.recordingState == .recording)
+    #expect(viewModel.recordingStatus == .recording)
   }
 
   @Test func pauseButtonClickedWhileStoppedDoesNothing() {
     let viewModel = RecordingControlViewModel()
     viewModel.pauseButtonClicked()
-    #expect(viewModel.recordingState == .stopped)
+    #expect(viewModel.recordingStatus == .stopped)
   }
 
   @Test func stopButtonClickedWhilePausedTransitionsToStopped() {
@@ -47,7 +47,7 @@ struct RecordingControlViewModelTests {
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     viewModel.stopButtonClicked()
-    #expect(viewModel.recordingState == .stopped)
+    #expect(viewModel.recordingStatus == .stopped)
   }
 
   @Test func initialRecordingStatusTextIsNil() {

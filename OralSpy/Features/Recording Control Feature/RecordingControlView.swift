@@ -38,19 +38,19 @@ struct RecordingControlView: View {
   }
 
   private var isStopButtonDisabled: Bool {
-    viewModel.recordingState == .stopped
+    viewModel.recordingStatus == .stopped
   }
 
   private var isRecordButtonDisabled: Bool {
-    viewModel.recordingState != .stopped
+    viewModel.recordingStatus != .stopped
   }
 
   private var isPauseButtonDisabled: Bool {
-    viewModel.recordingState == .stopped
+    viewModel.recordingStatus == .stopped
   }
 
   private var pauseButtonIcon: String {
-    switch viewModel.recordingState {
+    switch viewModel.recordingStatus {
     case .recording:
       "pause.fill"
     case .paused:
