@@ -2,76 +2,110 @@ import Testing
 
 @testable import OralSpy
 
-@Test func initialStateHasBothEnabled() {
-  let viewModel = ContentViewModel()
+struct ContentViewModelTests {
+  @Test func initialStateHasBothEnabled() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
-  #expect(viewModel.isRecordingEnabled == true)
-  #expect(viewModel.isPlaybackEnabled == true)
-}
+    #expect(viewModel.isRecordingEnabled == true)
+    #expect(viewModel.isPlaybackEnabled == true)
+  }
 
-@Test func playbackDisabledWhenRecordingStarts() {
-  let viewModel = ContentViewModel()
+  @Test func playbackDisabledWhenRecordingStarts() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
-  viewModel.recordingControlViewModel.recordButtonClicked()
+    viewModel.recordingControlViewModel.recordButtonClicked()
 
-  #expect(viewModel.isPlaybackEnabled == false)
-}
+    #expect(viewModel.isPlaybackEnabled == false)
+  }
 
-@Test func playbackDisabledWhenRecordingPaused() {
-  let viewModel = ContentViewModel()
+  @Test func playbackDisabledWhenRecordingPaused() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
-  viewModel.recordingControlViewModel.recordButtonClicked()
-  viewModel.recordingControlViewModel.pauseButtonClicked()
+    viewModel.recordingControlViewModel.recordButtonClicked()
+    viewModel.recordingControlViewModel.pauseButtonClicked()
 
-  #expect(viewModel.isPlaybackEnabled == false)
-}
+    #expect(viewModel.isPlaybackEnabled == false)
+  }
 
-@Test func playbackEnabledWhenRecordingStopped() {
-  let viewModel = ContentViewModel()
+  @Test func playbackEnabledWhenRecordingStopped() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
-  viewModel.recordingControlViewModel.recordButtonClicked()
-  viewModel.recordingControlViewModel.stopButtonClicked()
+    viewModel.recordingControlViewModel.recordButtonClicked()
+    viewModel.recordingControlViewModel.stopButtonClicked()
 
-  #expect(viewModel.isPlaybackEnabled == true)
-}
+    #expect(viewModel.isPlaybackEnabled == true)
+  }
 
-@Test func recordingDisabledWhenPlaybackStarts() {
-  let viewModel = ContentViewModel()
-  let testItem = RecordingItem.test[0]
+  @Test func recordingDisabledWhenPlaybackStarts() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
+    let testItem = RecordingItem.test[0]
 
-  viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
+    viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
 
-  #expect(viewModel.isRecordingEnabled == false)
-}
+    #expect(viewModel.isRecordingEnabled == false)
+  }
 
-@Test func recordingEnabledWhenPlaybackStops() {
-  let viewModel = ContentViewModel()
-  let testItem = RecordingItem.test[0]
+  @Test func recordingEnabledWhenPlaybackStops() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
+    let testItem = RecordingItem.test[0]
 
-  viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
-  viewModel.recordingListViewModel.stopItem()
+    viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
+    viewModel.recordingListViewModel.stopItem()
 
-  #expect(viewModel.isRecordingEnabled == true)
-}
+    #expect(viewModel.isRecordingEnabled == true)
+  }
 
-@Test func playbackStopsAutomaticallyWhenRecordingStarts() {
-  let viewModel = ContentViewModel()
-  let testItem = RecordingItem.test[0]
+  @Test func playbackStopsAutomaticallyWhenRecordingStarts() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
+    let testItem = RecordingItem.test[0]
 
-  viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
-  viewModel.recordingControlViewModel.recordButtonClicked()
+    viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
+    viewModel.recordingControlViewModel.recordButtonClicked()
 
-  #expect(viewModel.recordingListViewModel.playingItemId == nil)
-}
+    #expect(viewModel.recordingListViewModel.playingItemId == nil)
+  }
 
-@Test func playbackStopsAutomaticallyWhenRecordingResumes() {
-  let viewModel = ContentViewModel()
-  let testItem = RecordingItem.test[0]
+  @Test func playbackStopsAutomaticallyWhenRecordingResumes() {
+    let repository = RecordingRepositoryMock()
+    let audioService = AudioRecordingServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
+    let testItem = RecordingItem.test[0]
 
-  viewModel.recordingControlViewModel.recordButtonClicked()
-  viewModel.recordingControlViewModel.pauseButtonClicked()
-  viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
-  viewModel.recordingControlViewModel.pauseButtonClicked()
+    viewModel.recordingControlViewModel.recordButtonClicked()
+    viewModel.recordingControlViewModel.pauseButtonClicked()
+    viewModel.recordingListViewModel.playItem(id: testItem.id, url: testItem.fileURL)
+    viewModel.recordingControlViewModel.pauseButtonClicked()
 
-  #expect(viewModel.recordingListViewModel.playingItemId == nil)
+    #expect(viewModel.recordingListViewModel.playingItemId == nil)
+  }
 }

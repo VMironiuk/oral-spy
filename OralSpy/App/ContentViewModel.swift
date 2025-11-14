@@ -18,10 +18,21 @@ final class ContentViewModel: ObservableObject {
   private var cancellables = Set<AnyCancellable>()
 
   init(
-    repository: RecordingRepositoryType = CoreDataRecordingRepository()
+    repository: RecordingRepositoryType = CoreDataRecordingRepository(),
+    recordingControlViewModel: RecordingControlViewModel? = nil,
+    recordingListViewModel: RecordingListViewModel? = nil
   ) {
-    self.recordingControlViewModel = RecordingControlViewModel(repository: repository)
-    self.recordingListViewModel = RecordingListViewModel(repository: repository)
+    if let recordingControlViewModel = recordingControlViewModel {
+      self.recordingControlViewModel = recordingControlViewModel
+    } else {
+      self.recordingControlViewModel = RecordingControlViewModel(repository: repository)
+    }
+
+    if let recordingListViewModel = recordingListViewModel {
+      self.recordingListViewModel = recordingListViewModel
+    } else {
+      self.recordingListViewModel = RecordingListViewModel(repository: repository)
+    }
 
     setupCoordination()
   }

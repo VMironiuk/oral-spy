@@ -52,6 +52,7 @@ final class RecordingControlViewModel: ObservableObject {
     
     audioRecordingService.error
       .receive(on: DispatchQueue.main)
+      .compactMap { $0 }
       .sink { [weak self] error in
         guard let self else { return }
         recordingStatus = .stopped

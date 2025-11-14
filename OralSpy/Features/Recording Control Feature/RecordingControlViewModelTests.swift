@@ -4,32 +4,42 @@ import Testing
 
 struct RecordingControlViewModelTests {
   @Test func initialStateIsStopped() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     #expect(viewModel.recordingStatus == .stopped)
   }
 
   @Test func recordButtonClickedTransitionsToRecording() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.recordingStatus == .recording)
   }
 
   @Test func stopButtonClickedTransitionsToStopped() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.stopButtonClicked()
     #expect(viewModel.recordingStatus == .stopped)
   }
 
   @Test func pauseButtonClickedWhileRecordingTransitionsToPaused() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     #expect(viewModel.recordingStatus == .paused)
   }
 
   @Test func pauseButtonClickedWhilePausedTransitionsToRecording() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     viewModel.pauseButtonClicked()
@@ -37,13 +47,17 @@ struct RecordingControlViewModelTests {
   }
 
   @Test func pauseButtonClickedWhileStoppedDoesNothing() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.pauseButtonClicked()
     #expect(viewModel.recordingStatus == .stopped)
   }
 
   @Test func stopButtonClickedWhilePausedTransitionsToStopped() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     viewModel.stopButtonClicked()
@@ -51,32 +65,42 @@ struct RecordingControlViewModelTests {
   }
 
   @Test func initialRecordingStatusTextIsNil() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     #expect(viewModel.recordingStatusText.isEmpty)
   }
 
   @Test func recordButtonClickedSetsRecordingStatusTextToRecording() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.recordingStatusText == "Recording")
   }
 
   @Test func stopButtonClickedSetsRecordingStatusTextToStopped() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.stopButtonClicked()
     #expect(viewModel.recordingStatusText == "Stopped")
   }
 
   @Test func pauseButtonClickedWhileRecordingSetsRecordingStatusTextToPaused() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     #expect(viewModel.recordingStatusText == "Paused")
   }
 
   @Test func pauseButtonClickedWhilePausedSetsRecordingStatusTextToRecording() {
-    let viewModel = RecordingControlViewModel()
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     viewModel.pauseButtonClicked()
@@ -86,7 +110,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextFormatsSeconds() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 5
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.durationText == "00:00:05")
   }
@@ -94,7 +120,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextFormatsMinutesAndSeconds() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 125
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.durationText == "00:02:05")
   }
@@ -102,7 +130,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextFormatsHoursMinutesAndSeconds() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 3665
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.durationText == "01:01:05")
   }
@@ -110,7 +140,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextFormatsExactlyOneHour() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 3600
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.durationText == "01:00:00")
   }
@@ -118,7 +150,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextFormatsExactlyOneMinute() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 60
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.durationText == "00:01:00")
   }
@@ -126,7 +160,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextFormatsMultipleHours() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 7325
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.durationText == "02:02:05")
   }
@@ -134,7 +170,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextResetsToZeroOnStop() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 125
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.stopButtonClicked()
     #expect(viewModel.durationText == "00:00:00")
@@ -143,7 +181,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextPreservesValueOnPause() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 125
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     viewModel.pauseButtonClicked()
     #expect(viewModel.durationText == "00:02:05")
@@ -152,7 +192,9 @@ struct RecordingControlViewModelTests {
   @Test func durationTextContinuesFromPausedValueOnResume() {
     let stub = TimerServiceStub()
     stub.secondsToAdvance = 60
-    let viewModel = RecordingControlViewModel(timerService: stub)
+    let audioService = AudioRecordingServiceMock()
+    let repository = RecordingRepositoryMock()
+    let viewModel = RecordingControlViewModel(timerService: stub, audioRecordingService: audioService, repository: repository)
     viewModel.recordButtonClicked()
     #expect(viewModel.durationText == "00:01:00")
     stub.secondsToAdvance = 30
