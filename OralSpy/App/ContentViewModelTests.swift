@@ -5,9 +5,10 @@ import Testing
 struct ContentViewModelTests {
   @Test func initialStateHasBothEnabled() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
     #expect(viewModel.isRecordingEnabled == true)
@@ -16,9 +17,10 @@ struct ContentViewModelTests {
 
   @Test func playbackDisabledWhenRecordingStarts() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
     viewModel.recordingControlViewModel.recordButtonClicked()
@@ -28,9 +30,10 @@ struct ContentViewModelTests {
 
   @Test func playbackDisabledWhenRecordingPaused() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
     viewModel.recordingControlViewModel.recordButtonClicked()
@@ -41,9 +44,10 @@ struct ContentViewModelTests {
 
   @Test func playbackEnabledWhenRecordingStopped() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
 
     viewModel.recordingControlViewModel.recordButtonClicked()
@@ -54,9 +58,10 @@ struct ContentViewModelTests {
 
   @Test func recordingDisabledWhenPlaybackStarts() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
     let testItem = RecordingItem.test[0]
 
@@ -67,9 +72,10 @@ struct ContentViewModelTests {
 
   @Test func recordingEnabledWhenPlaybackStops() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
     let testItem = RecordingItem.test[0]
 
@@ -81,9 +87,10 @@ struct ContentViewModelTests {
 
   @Test func playbackStopsAutomaticallyWhenRecordingStarts() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
     let testItem = RecordingItem.test[0]
 
@@ -95,9 +102,10 @@ struct ContentViewModelTests {
 
   @Test func playbackStopsAutomaticallyWhenRecordingResumes() {
     let repository = RecordingRepositoryMock()
-    let audioService = AudioRecordingServiceMock()
-    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioService, repository: repository)
-    let recordingListViewModel = RecordingListViewModel(repository: repository)
+    let audioRecordingService = AudioRecordingServiceMock()
+    let audioPlaybackService = AudioPlaybackServiceMock()
+    let recordingControlViewModel = RecordingControlViewModel(audioRecordingService: audioRecordingService, repository: repository)
+    let recordingListViewModel = RecordingListViewModel(repository: repository, audioPlaybackService: audioPlaybackService)
     let viewModel = ContentViewModel(repository: repository, recordingControlViewModel: recordingControlViewModel, recordingListViewModel: recordingListViewModel)
     let testItem = RecordingItem.test[0]
 
