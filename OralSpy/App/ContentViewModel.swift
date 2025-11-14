@@ -18,7 +18,7 @@ final class ContentViewModel: ObservableObject {
   private var cancellables = Set<AnyCancellable>()
 
   init(
-    repository: RecordingRepositoryType = UserDefaultsRecordingRepository()
+    repository: RecordingRepositoryType = CoreDataRecordingRepository()
   ) {
     self.recordingControlViewModel = RecordingControlViewModel(repository: repository)
     self.recordingListViewModel = RecordingListViewModel(repository: repository)

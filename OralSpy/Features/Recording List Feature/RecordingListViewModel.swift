@@ -9,7 +9,7 @@ final class RecordingListViewModel: ObservableObject {
   private let repository: RecordingRepositoryType
   private var cancellables = Set<AnyCancellable>()
 
-  init(repository: RecordingRepositoryType = UserDefaultsRecordingRepository()) {
+  init(repository: RecordingRepositoryType = CoreDataRecordingRepository()) {
     self.repository = repository
 
     repository.items

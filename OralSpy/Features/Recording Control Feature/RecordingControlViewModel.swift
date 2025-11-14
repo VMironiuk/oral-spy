@@ -37,7 +37,7 @@ final class RecordingControlViewModel: ObservableObject {
   init(
     timerService: TimerServiceType = TimerService(),
     audioRecordingService: AudioRecordingServiceType = AudioRecordingService(),
-    repository: RecordingRepositoryType = UserDefaultsRecordingRepository()
+    repository: RecordingRepositoryType = CoreDataRecordingRepository()
   ) {
     self.timerService = timerService
     self.audioRecordingService = audioRecordingService
