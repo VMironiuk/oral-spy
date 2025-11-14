@@ -36,6 +36,7 @@ struct RecordingRowView: View {
 #Preview {
   RecordingRowView(
     item: RecordingItem(
+      id: UUID(),
       timestamp: "2024-11-13 10:30:00",
       duration: 125,
       fileSize: 1024000,

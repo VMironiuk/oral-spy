@@ -1,6 +1,13 @@
 import AVFoundation
 import Combine
 
+struct RecordingMetadata {
+  let url: URL
+  let timestamp: String
+  let duration: TimeInterval
+  let fileSize: Int
+}
+
 enum AudioRecordingServiceError: Error, LocalizedError {
   case deniedAuthorization
   case restrictedAuthorization
@@ -33,8 +40,8 @@ final class AudioRecordingService: NSObject, AudioRecordingServiceType {
     errorSubject.eraseToAnyPublisher()
   }
 
-  private let recordingFinishedSubject = PassthroughSubject<URL, Never>()
-  var recordingFinished: AnyPublisher<URL, Never> {
+  private let recordingFinishedSubject = PassthroughSubject<RecordingMetadata, Never>()
+  var recordingFinished: AnyPublisher<RecordingMetadata, Never> {
     recordingFinishedSubject.eraseToAnyPublisher()
   }
 
@@ -127,7 +134,19 @@ final class AudioRecordingService: NSObject, AudioRecordingServiceType {
     recorder.stop()
 
     if FileManager.default.fileExists(atPath: fileURL.path) {
-      recordingFinishedSubject.send(fileURL)
+      let duration = recorder.currentTime
+      let fileSize = (try? FileManager.default.attributesOfItem(atPath: fileURL.path)[.size] as? Int) ?? 0
+
+      let filename = fileURL.deletingPathExtension().lastPathComponent
+      let timestamp = filename.replacingOccurrences(of: "recording_", with: "")
+
+      let metadata = RecordingMetadata(
+        url: fileURL,
+        timestamp: timestamp,
+        duration: duration,
+        fileSize: fileSize
+      )
+      recordingFinishedSubject.send(metadata)
     }
 
     cleanup()

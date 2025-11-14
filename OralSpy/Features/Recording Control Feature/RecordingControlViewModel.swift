@@ -10,7 +10,7 @@ protocol TimerServiceType {
 
 protocol AudioRecordingServiceType {
   var error: AnyPublisher<Error?, Never> { get }
-  var recordingFinished: AnyPublisher<URL, Never> { get }
+  var recordingFinished: AnyPublisher<RecordingMetadata, Never> { get }
   func checkPermissions()
   func record() throws
   func pause()
@@ -31,14 +31,17 @@ final class RecordingControlViewModel: ObservableObject {
 
   private let timerService: TimerServiceType
   private let audioRecordingService: AudioRecordingServiceType
+  private let repository: RecordingRepositoryType
   private var cancellables = Set<AnyCancellable>()
 
   init(
     timerService: TimerServiceType = TimerService(),
-    audioRecordingService: AudioRecordingServiceType = AudioRecordingService()
+    audioRecordingService: AudioRecordingServiceType = AudioRecordingService(),
+    repository: RecordingRepositoryType = UserDefaultsRecordingRepository()
   ) {
     self.timerService = timerService
     self.audioRecordingService = audioRecordingService
+    self.repository = repository
     
     timerService.elapsedSeconds
       .sink { [weak self] seconds in
@@ -61,8 +64,19 @@ final class RecordingControlViewModel: ObservableObject {
 
     audioRecordingService.recordingFinished
       .receive(on: DispatchQueue.main)
-      .sink { fileURL in
-        print("Recording finished: \(fileURL)")
+      .sink { [weak self] metadata in
+        guard let self else { return }
+        print("Recording finished: \(metadata.url), duration: \(metadata.duration)s, size: \(metadata.fileSize) bytes")
+        let recordingItem = RecordingItem(
+          id: UUID(),
+          timestamp: metadata.timestamp,
+          duration: metadata.duration,
+          fileSize: metadata.fileSize,
+          fileURL: metadata.url.path
+        )
+        Task {
+          await self.repository.add(recordingItem)
+        }
       }
       .store(in: &cancellables)
 

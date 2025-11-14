@@ -1,6 +1,13 @@
 import Combine
 import Foundation
 
+protocol RecordingRepositoryType {
+  var items: AnyPublisher<[RecordingItem], Never> { get }
+  func add(_ item: RecordingItem) async
+  func remove(id: UUID) async throws
+  func getAll() async -> [RecordingItem]
+}
+
 final class ContentViewModel: ObservableObject {
   let recordingControlViewModel: RecordingControlViewModel
   let recordingListViewModel: RecordingListViewModel
@@ -11,11 +18,10 @@ final class ContentViewModel: ObservableObject {
   private var cancellables = Set<AnyCancellable>()
 
   init(
-    recordingControlViewModel: RecordingControlViewModel = RecordingControlViewModel(),
-    recordingListViewModel: RecordingListViewModel = RecordingListViewModel()
+    repository: RecordingRepositoryType = UserDefaultsRecordingRepository()
   ) {
-    self.recordingControlViewModel = recordingControlViewModel
-    self.recordingListViewModel = recordingListViewModel
+    self.recordingControlViewModel = RecordingControlViewModel(repository: repository)
+    self.recordingListViewModel = RecordingListViewModel(repository: repository)
 
     setupCoordination()
   }

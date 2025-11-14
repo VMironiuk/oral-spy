@@ -16,10 +16,10 @@ struct RecordingListView: View {
             viewModel.stopItem()
           }
         )
-      }
-      .onDelete { indexSet in
-        indexSet.forEach { index in
-          viewModel.removeItem(id: viewModel.items[index].id)
+        .contextMenu {
+          Button("Delete", role: .destructive) {
+            viewModel.removeItem(id: item.id)
+          }
         }
       }
     }
