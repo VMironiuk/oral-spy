@@ -131,10 +131,10 @@ final class AudioRecordingService: NSObject, AudioRecordingServiceType {
       return
     }
 
+    let duration = recorder.currentTime
     recorder.stop()
 
     if FileManager.default.fileExists(atPath: fileURL.path) {
-      let duration = recorder.currentTime
       let fileSize = (try? FileManager.default.attributesOfItem(atPath: fileURL.path)[.size] as? Int) ?? 0
 
       let filename = fileURL.deletingPathExtension().lastPathComponent
