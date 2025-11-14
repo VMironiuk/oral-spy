@@ -1,6 +1,6 @@
 import Foundation
 
-struct RecordingItem: Identifiable, Codable {
+struct RecordingItem: Identifiable, Codable, Equatable {
   let id: UUID
   let timestamp: String
   let duration: TimeInterval

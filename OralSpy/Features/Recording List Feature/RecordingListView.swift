@@ -16,6 +16,7 @@ struct RecordingListView: View {
             viewModel.stopItem()
           }
         )
+        .transition(.move(edge: .leading).combined(with: .opacity))
         .contextMenu {
           Button("Delete", role: .destructive) {
             viewModel.removeItem(id: item.id)
@@ -23,6 +24,7 @@ struct RecordingListView: View {
         }
       }
     }
+    .animation(.easeInOut(duration: 0.3), value: viewModel.items)
     .alert("Error", isPresented: .constant(viewModel.error != nil)) {
       Button("OK") {}
     } message: {
