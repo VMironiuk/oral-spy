@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import OSLog
 
 protocol TimerServiceType {
   var elapsedSeconds: AnyPublisher<TimeInterval, Never> { get }
@@ -33,6 +34,7 @@ final class RecordingControlViewModel: ObservableObject {
   private let audioRecordingService: AudioRecordingServiceType
   private let repository: RecordingRepositoryType
   private var cancellables = Set<AnyCancellable>()
+  private let logger = Logger(subsystem: "com.oralspy.features", category: "RecordingControl")
 
   init(
     timerService: TimerServiceType = TimerService(),
@@ -67,7 +69,13 @@ final class RecordingControlViewModel: ObservableObject {
       .receive(on: DispatchQueue.main)
       .sink { [weak self] metadata in
         guard let self else { return }
-        print("Recording finished: \(metadata.url), duration: \(metadata.duration)s, size: \(metadata.fileSize) bytes")
+        logger.info(
+          """
+          Recording finished: \(metadata.url), \
+          duration: \(metadata.duration)s, size: \
+          \(metadata.fileSize) bytes
+          """
+        )
         let recordingItem = RecordingItem(
           id: UUID(),
           timestamp: metadata.timestamp,

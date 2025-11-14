@@ -1,11 +1,13 @@
 import Combine
 import CoreData
 import Foundation
+import OSLog
 
 final class CoreDataRecordingRepository: NSObject, RecordingRepositoryType {
   private let coreDataStack: CoreDataStack
   private let itemsSubject = CurrentValueSubject<[RecordingItem], Never>([])
   private var fetchedResultsController: NSFetchedResultsController<RecordingItemEntity>?
+  private let logger = Logger(subsystem: "com.oralspy.repository", category: "CoreDataRecordingRepository")
 
   var items: AnyPublisher<[RecordingItem], Never> {
     itemsSubject.eraseToAnyPublisher()
@@ -33,7 +35,7 @@ final class CoreDataRecordingRepository: NSObject, RecordingRepositoryType {
     do {
       try fetchedResultsController?.performFetch()
     } catch {
-      print("Failed to fetch recordings: \(error)")
+      logger.error("Failed to fetch recordings: \(error)")
     }
   }
 
@@ -57,7 +59,7 @@ final class CoreDataRecordingRepository: NSObject, RecordingRepositoryType {
 
   func add(_ item: RecordingItem) async {
     let context = coreDataStack.newBackgroundContext()
-    await context.perform {
+    await context.perform { [weak self] in
       let entity = RecordingItemEntity(context: context)
       entity.id = item.id
       entity.timestamp = item.timestamp
@@ -68,7 +70,7 @@ final class CoreDataRecordingRepository: NSObject, RecordingRepositoryType {
       do {
         try context.save()
       } catch {
-        print("Failed to save recording: \(error)")
+        self?.logger.error("Failed to save recording: \(error)")
       }
     }
   }
